@@ -1,10 +1,11 @@
 function crateCalculator() {
   return {
-    display: document.querySelector(".container-bottom-display"),
+    displayTop: document.querySelector(".container-top-display"),
+    displayBottom: document.querySelector(".container-bottom-display"),
 
     init() {
       this.buttonClick();
-      this.pressEnter()
+      this.pressEnter();
     },
 
     buttonClick() {
@@ -13,53 +14,52 @@ function crateCalculator() {
 
         if (el.classList.contains("button-num")) {
           this.btnValueToDisplay(el.innerText);
-        } else if(el.classList.contains("button-clear")){
-            this.clearDisplay()
-        } else if(el.classList.contains("button-del")){
-            this.deleteChar()
-        } else if(el.classList.contains("button-equal")){
-            this.equalOperation()
+        } else if (el.classList.contains("button-clear")) {
+          this.clearDisplay();
+        } else if (el.classList.contains("button-del")) {
+          this.deleteChar();
+        } else if (el.classList.contains("button-equal")) {
+          this.equalOperation();
         }
-    }
-    )},
-
-    btnValueToDisplay(text){
-        this.display.value += text
+      });
     },
 
-    clearDisplay(){
-        this.display.value = ""
+    btnValueToDisplay(text) {
+      this.displayTop.value += text;
     },
 
-    deleteChar(){
-        this.display.value = this.display.value.slice(0, -1)
+    clearDisplay() {
+      this.displayTop.value = "";
     },
 
-    equalOperation(){
-        let evaluate = this.display.value
-        try {
-            evaluate = eval(evaluate)
+    deleteChar() {
+      this.displayTop.value = this.displayTop.value.slice(0, -1);
+    },
 
-            if(!evaluate){
-                alert('Conta inválida')
-                return
-            }
+    equalOperation() {
+      let evaluate = this.displayTop.value;
+      try {
+        evaluate = eval(evaluate);
 
-            this.display.value = evaluate
-        } catch (error) {
-            alert('Conta inválida')
-            return
+        if (!evaluate) {
+          alert("Conta inválida");
+          return;
         }
+
+        this.displayBottom.value = evaluate;
+      } catch (error) {
+        this.displayBottom.value = "Error"
+        return;
+      }
     },
 
-    pressEnter(){
-        this.display.addEventListener('keyup', (e)=>{
-            if(e.keyCode === 13){
-                this.equalOperation()
-            }
-        })
-    }
-
+    pressEnter() {
+      this.displayTop.addEventListener("keyup", (e) => {
+        if (e.keyCode === 13) {
+          this.equalOperation();
+        }
+      });
+    },
   };
 }
 
